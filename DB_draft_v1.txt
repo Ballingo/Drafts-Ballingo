@@ -1,0 +1,175 @@
+USUARIO {
+
+	primaryKey: uid
+	username: string
+	email: string
+	password: string
+	player: Player
+
+}
+
+
+PLAYER {
+	primaryKey: uid
+	inventory: [FOODLIST, WARDROBE]
+	pets: [PET]
+	languages: [LANGUAGE]
+	actualLanguage: LANGUAGE
+	coins: int
+	activeTrades: [TRADE]
+	livesCounter: int
+
+}
+
+
+
+FOODLIST {
+	primaryKey: uid
+	userID: uid
+	items: [FOOD_ITEM]
+
+}
+
+
+FOOD_ITEM {
+    primaryKey: iid
+    foodlistID: uid
+    foodID: uid
+    quantity: int
+}
+
+
+
+
+FOOD {
+
+	primaryKey: uid
+	name: string
+	language: string
+
+}
+
+
+CLOTHES {
+
+	primaryKey: uid
+	type: ENUM { hat, tshirt, shoes, accesories}
+	style: image.png
+
+}
+
+
+WARDROBE {
+	primaryKey: uid
+	userID: uid
+	items [CLOTHES]
+}
+
+
+
+PET {
+
+	primaryKey: uid
+	userId: uid
+	language: string
+	hunger: int
+	isDead: boolean
+	
+}
+
+
+
+TRADE {
+
+	primaryKey: uid
+	userId: uid
+	isActive: boolean
+	in-food: FOOD
+	out-food: FOOD
+
+}
+
+
+LANGUAGE {
+	
+	primaryKey: uid
+	questionarias: [QUESTIONARIA]
+}
+
+
+
+QUESTIONARIA {
+
+	primaryKey: uid
+	name: str
+	level: str
+	question: [QUESTIONS]
+
+}
+
+
+PLAYER_PROGRESS {
+    primaryKey: uid
+    userID: uid
+    questionariaID: uid
+    completed: boolean
+    score: int
+    attempts: int
+    dateCompleted: datetime
+}
+
+
+
+QUESTIONS {
+	
+	primaryKey: uid
+	title: str
+	answers: [STRINGS]
+	correctAnswer: str
+
+}
+
+
+
+SHOP {
+	
+	realMoneyPacks: [ESTAFA]
+	clothesPack: [FAKEESTAFA]
+
+}
+
+
+
+
+ESTAFA {
+	
+	primaryKey: uid
+	price: float
+	name: string
+	items: [SHOP_ITEM]
+
+}
+
+
+FAKEESTAFA {
+
+	primaryKey: uid
+	price: float
+	name: string
+	items: [SHOP_ITEM]
+
+
+}
+
+
+
+SHOP_ITEM {
+	
+	primaryKey: uid
+	estafauid: uid
+	clothesId ? uid
+	type : ENUM {lives, coins, CLOTHES}
+	quantity ? int
+
+}
+
