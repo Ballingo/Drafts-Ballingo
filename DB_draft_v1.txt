@@ -46,6 +46,8 @@ FOOD {
 	primaryKey: uid
 	name: string
 	language: string
+	hunger_points: int, 
+	img: none
 
 }
 
