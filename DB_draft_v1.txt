@@ -1,4 +1,4 @@
-USUARIO {
+USUARIO { x
 
 	primaryKey: uid
 	username: string
@@ -9,21 +9,20 @@ USUARIO {
 }
 
 
-PLAYER {
-	primaryKey: uid
-	inventory: [FOODLIST, WARDROBE]
-	pets: [PET]
-	languages: [LANGUAGE]
-	actualLanguage: LANGUAGE
-	coins: int
-	activeTrades: [TRADE]
-	livesCounter: int
 
+
+INVENTORY { x
+	primaryKey: uid
+	id: USUARIO
+	clothes_inventory: [WARDROBE]
+	food_inventory: [FOODLIST]
+	coins: int
+	livesCounter: counte
 }
 
 
 
-FOODLIST {
+FOODLIST { x
 	primaryKey: uid
 	userID: uid
 	items: [FOOD_ITEM]
@@ -31,7 +30,7 @@ FOODLIST {
 }
 
 
-FOOD_ITEM {
+FOOD_ITEM { x
     primaryKey: iid
     foodlistID: uid
     foodID: uid
@@ -41,7 +40,7 @@ FOOD_ITEM {
 
 
 
-FOOD {
+FOOD { x
 
 	primaryKey: uid
 	name: string
@@ -52,7 +51,7 @@ FOOD {
 }
 
 
-CLOTHES {
+CLOTHES { x
 
 	primaryKey: uid
 	type: ENUM { hat, tshirt, shoes, accesories}
@@ -61,7 +60,7 @@ CLOTHES {
 }
 
 
-WARDROBE {
+WARDROBE { x
 	primaryKey: uid
 	userID: uid
 	items [CLOTHES]
@@ -69,10 +68,10 @@ WARDROBE {
 
 
 
-PET {
+PET { x
 
 	primaryKey: uid
-	userId: uid
+	playerId: uid
 	language: string
 	hunger: int
 	isDead: boolean
@@ -81,7 +80,7 @@ PET {
 
 
 
-TRADE {
+TRADE { x
 
 	primaryKey: uid
 	userId: uid
@@ -92,15 +91,38 @@ TRADE {
 }
 
 
-LANGUAGE {
+LANGUAGE { x
 	
 	primaryKey: uid
+	language: string
 	questionarias: [QUESTIONARIA]
 }
 
 
+PLAYER {
+	primaryKey: uid
+	inventory: [INVENTORY]
+	pets: [PET]
+	languages: [LANGUAGE]
+	actualLanguage: LANGUAGE
+	activeTrades: [TRADE]
+	questionnaries: [QUESTIONNARIE]
 
-QUESTIONARIA {
+}
+
+PLAYER_PROGRESS {
+    primaryKey: uid
+    userID: uid
+    questionariaID: uid
+    completed: boolean
+    score: int
+    attempts: int
+    completedDate: datetime
+}
+
+
+
+QUESTIONNARIE { x
 
 	primaryKey: uid
 	name: str
@@ -110,19 +132,10 @@ QUESTIONARIA {
 }
 
 
-PLAYER_PROGRESS {
-    primaryKey: uid
-    userID: uid
-    questionariaID: uid
-    completed: boolean
-    score: int
-    attempts: int
-    dateCompleted: datetime
-}
 
 
 
-QUESTIONS {
+QUESTIONS { x
 	
 	primaryKey: uid
 	title: str
@@ -132,18 +145,7 @@ QUESTIONS {
 }
 
 
-
-SHOP {
-	
-	realMoneyPacks: [ESTAFA]
-	clothesPack: [FAKEESTAFA]
-
-}
-
-
-
-
-ESTAFA {
+REALPACK { x
 	
 	primaryKey: uid
 	price: float
@@ -153,7 +155,7 @@ ESTAFA {
 }
 
 
-FAKEESTAFA {
+GAMEPACK { x
 
 	primaryKey: uid
 	price: float
@@ -163,14 +165,25 @@ FAKEESTAFA {
 
 }
 
+    language = models.CharField(
+        choices=[
+            ('en', 'English'), 
+            ('es', 'Spanish'), 
+            ('de', 'German'), 
+            ('ar', 'Arabic'),
+            ('ja', 'Japanese')
+        ], 
+        max_length=20
+    )
 
 
-SHOP_ITEM {
+
+SHOP_ITEM { x
 	
 	primaryKey: uid
 	estafauid: uid
 	clothesId ? uid
-	type : ENUM {lives, coins, CLOTHES}
+	type : ENUM {lives, coins, clothes}
 	quantity ? int
 
 }
